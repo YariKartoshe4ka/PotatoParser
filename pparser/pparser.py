@@ -91,7 +91,19 @@ class PParser:
             'F11':    'KEY_F11',
             'F12':    'KEY_F12',
             'SPACE':  ' ',
-            'TAB':    'KEY_TAB'
+            'TAB':    'KEY_TAB',
+
+            'DELETE':     'KEY_DELETE',
+            'HOME':       'KEY_HOME',
+            'INSERT':     'KEY_INSERT',
+            'PAGEUP':     'KEY_PAGE_UP',
+            'PAGEDOWN':   'KEY_PAGE_DOWN',
+            'WINDOWS':    'KEY_LEFT_GUI',
+            'GUI':        'KEY_LEFT_GUI',
+            'UPARROW':    'KEY_UP_ARROW',
+            'DOWNARROW':  ' EY_DOWN_ARROW',
+            'LEFTARROW':  'KEY_LEFY_ARROW',
+            'RIGHTARROW': 'KEY_RIGHT_ARROW',
         }
 
 
@@ -125,11 +137,18 @@ class PParser:
             else:
                 self.show.error(f'Command ALT take END, ESC, ESCAPE, F1...F12, Single Char, SPACE, TAB parameter! (line:{self.count})')
 
+        elif line[0] == 'SHIFT':
+            second_button = self.translator.get(line[1], None)
+            if second_button:
+                self.show.write(self.shift(second_button))
+            else:
+                self.show.error(f'Command SHIFT take DELETE, HOME, INSERT, PAGEUP, PAGEDOWN, WINDOWS, GUI, UPARROW, DOWNARROW, LEFTARROW, RIGHTARROW, TAB parameter! (line:{self.count})')
+
         elif line[0] == 'GUI' or line[0] == 'WINDOWS':
             if len(line[1]) == 1:
                 self.show.write(self.gui(line[1]))
             else:
-                self.show.error(f'Command {line[0]} using with letter, not with string! (line:{self.count})')
+                self.show.error(f'Command {line[0]} using with single char, not with string! (line:{self.count})')
 
         else:
             self.show.error(f'Command {line[0]} was not recognized! (line:{self.count})')
@@ -154,3 +173,6 @@ class PParser:
 
     def gui(self, key):
         return f'  Keyboard.press(KEY_LEFT_GUI); Keyboard.press(\'{key}\'); Keyboard.releaseAll();'
+
+    def shift(self, key):
+        return f'  Keyboard.press(KEY_LEFT_SHIFT); Keyboard.press({key}); Keyboard.releaseAll();'
