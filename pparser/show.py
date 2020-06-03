@@ -33,7 +33,7 @@ class Show:
   Github: https://github.com/YariKartoshe4ka/PotatoParser/
   PYPI: https://pypi.org/project/pparser/
 
-  {Style.BRIGHT}{Fore.RED}Use: pparser <path_to_your_ducky_script_file>{Style.RESET_ALL}\n''')
+  {Style.BRIGHT}{Fore.RED}Using: pparser <path_to_your_ducky_script_file>{Style.RESET_ALL}\n''')
 
     def close(self):
         self.stdout.close()

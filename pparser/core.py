@@ -5,10 +5,7 @@ from .show import Show
 from .pparser import PParser
 
 
-#################################################
-
 def entry_point():
-
     show = Show(open(f'{getcwd()}/sketch.ino', 'w'))
 
     if len(argv) < 2:

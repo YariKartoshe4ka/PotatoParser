@@ -1,5 +1,4 @@
 class PParser:
-    """"""
 
     def __init__(self, stdin, show):
         self.stdin = stdin
@@ -74,7 +73,25 @@ class PParser:
             ']': '  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(233); Keyboard.release(233); Keyboard.press(227); Keyboard.release(227); Keyboard.release(KEY_LEFT_ALT); delay(10);',
             '{': '  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(225); Keyboard.release(225); Keyboard.press(226); Keyboard.release(226); Keyboard.press(227); Keyboard.release(227); Keyboard.release(KEY_LEFT_ALT); delay(10);',
             '}': '  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(225); Keyboard.release(225); Keyboard.press(226); Keyboard.release(226); Keyboard.press(229); Keyboard.release(229); Keyboard.release(KEY_LEFT_ALT); delay(10);',
-            ' ': '  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(227); Keyboard.release(227); Keyboard.press(226); Keyboard.release(226); Keyboard.release(KEY_LEFT_ALT); delay(10);'
+            ' ': '  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(227); Keyboard.release(227); Keyboard.press(226); Keyboard.release(226); Keyboard.release(KEY_LEFT_ALT); delay(10);',
+
+            'END':    'KEY_END',
+            'ESC':    'KEY_ESC',
+            'ESCAPE': 'KEY_ESC',
+            'F1':     'KEY_F1',
+            'F2':     'KEY_F2',
+            'F3':     'KEY_F3',
+            'F4':     'KEY_F4',
+            'F5':     'KEY_F5',
+            'F6':     'KEY_F6',
+            'F7':     'KEY_F7',
+            'F8':     'KEY_F8',
+            'F9':     'KEY_F9',
+            'F10':    'KEY_F10',
+            'F11':    'KEY_F11',
+            'F12':    'KEY_F12',
+            'SPACE':  ' ',
+            'TAB':    'KEY_TAB'
         }
 
 
@@ -100,10 +117,13 @@ class PParser:
             self.show.write(self.enter)
 
         elif line[0] == 'ALT':
+            second_button = self.translator.get(line[1], None)
             if len(line[1]) == 1:
-                self.show.write(self.alt(line[1]))
+                self.show.write(self.alt(f"'{line[1]}'"))
+            elif second_button:
+                self.show.write(self.alt(second_button))
             else:
-                self.show.error(f'Command ALT using with letter, not with string! (line:{self.count})')
+                self.show.error(f'Command ALT take END, ESC, ESCAPE, F1...F12, Single Char, SPACE, TAB parameter! (line:{self.count})')
 
         elif line[0] == 'GUI' or line[0] == 'WINDOWS':
             if len(line[1]) == 1:
@@ -130,7 +150,7 @@ class PParser:
         return f'  delay({time});'
 
     def alt(self, key):
-        return f'  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(\'{key}\'); Keyboard.releaseAll();'
+        return f'  Keyboard.press(KEY_LEFT_ALT); Keyboard.press({key}); Keyboard.releaseAll();'
 
     def gui(self, key):
         return f'  Keyboard.press(KEY_LEFT_GUI); Keyboard.press(\'{key}\'); Keyboard.releaseAll();'

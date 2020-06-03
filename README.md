@@ -24,7 +24,7 @@ python3 setup.py install
 ```
 or install with pip:
 ```bash
-pip3 install pparser
+sudo pip3 install pparser
 ```
 
 
