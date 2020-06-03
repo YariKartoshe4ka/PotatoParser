@@ -22,5 +22,18 @@ class Show:
     def end(self):
         self.stdout.write('  // End payload\n}\n\n// Unused\nvoid loop() {}')
 
+    def art(self):
+        print(f'''{Style.BRIGHT}{Fore.GREEN}   _____        _          _          _____                              
+  |  __ \\      | |        | |        |  __ \\                             
+  | |__) |___  | |_  __ _ | |_  ___  | |__) |__ _  _ __  ___   ___  _ __ 
+  |  ___// _ \\ | __|/ _` || __|/ _ \\ |  ___// _` || '__|/ __| / _ \\| '__|
+  | |   | (_) || |_| (_| || |_| (_) || |   | (_| || |   \\__ \\|  __/| |   
+  |_|    \\___/  \\__|\\__,_| \\__|\\___/ |_|    \\__,_||_|   |___/ \\___||_|{Style.RESET_ALL}
+  
+  Github: https://github.com/YariKartoshe4ka/PotatoParser/
+  PYPI: https://pypi.org/project/pparser/
+
+  {Style.BRIGHT}{Fore.RED}Use: pparser <path_to_your_ducky_script_file>{Style.RESET_ALL}\n''')
+
     def close(self):
         self.stdout.close()
