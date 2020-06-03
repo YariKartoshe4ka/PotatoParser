@@ -111,22 +111,44 @@ class PParser:
         with self.stdin as file:
             for line in file:
                 self.count += 1
-                self.parse(line)
+
+                repeat = self.parse(line)
+                if repeat:
+                    for time in range(repeat):
+                        self.parse(previous_line)
+
+                previous_line = line
+
 
     def parse(self, line):
         line = line.lstrip().rstrip().split(' ')
 
+
         if line[0] == 'REM':
             self.show.write(self.rem(' '.join(line[1:])))
+
 
         elif line[0] == 'STRING':
             self.show.write(self.string(' '.join(line[1:])))
 
+
+        elif line[0] == 'REPEAT':
+            if self.count > 1:
+                try:
+                    return int(line[1])
+                except ValueError:
+                    self.show.error(f'Command REPEAT take number of times to repeat, not string! (line:{self.count})')
+            else:
+                self.show.error(f'You cannot use command REPEAT as a first command! (line:{self.count})')
+
+
         elif line[0] == 'DELAY':
             self.show.write(self.delay(line[1]))
 
+
         elif line[0] == 'ENTER':
             self.show.write(self.enter)
+
 
         elif line[0] == 'ALT':
             second_button = self.translator.get(line[1], None)
@@ -137,6 +159,7 @@ class PParser:
             else:
                 self.show.error(f'Command ALT take END, ESC, ESCAPE, F1...F12, Single Char, SPACE, TAB parameter! (line:{self.count})')
 
+
         elif line[0] == 'SHIFT':
             second_button = self.translator.get(line[1], None)
             if second_button:
@@ -144,14 +167,20 @@ class PParser:
             else:
                 self.show.error(f'Command SHIFT take DELETE, HOME, INSERT, PAGEUP, PAGEDOWN, WINDOWS, GUI, UPARROW, DOWNARROW, LEFTARROW, RIGHTARROW, TAB parameter! (line:{self.count})')
 
+
         elif line[0] == 'GUI' or line[0] == 'WINDOWS':
             if len(line[1]) == 1:
                 self.show.write(self.gui(line[1]))
             else:
                 self.show.error(f'Command {line[0]} using with single char, not with string! (line:{self.count})')
 
+
         else:
-            self.show.error(f'Command {line[0]} was not recognized! (line:{self.count})')
+            self.show.error(f'Command {line[0]} was not recognized! (line:{count})')
+
+        return 0
+
+
 
 
     def rem(self, line):
