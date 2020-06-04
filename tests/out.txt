@@ -1,0 +1,105 @@
+#include <Keyboard.h>
+
+/*
+Parsed by PotatoParser
+https://gihub.com/YariKartoshe4ka/PotatoParser/
+*/
+
+void setup() {
+  // Start Keyboard
+  Keyboard.begin();
+
+  // Start payload
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(233); Keyboard.release(233); Keyboard.press(231); Keyboard.release(231); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(233); Keyboard.release(233); Keyboard.press(232); Keyboard.release(232); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(233); Keyboard.release(233); Keyboard.press(233); Keyboard.release(233); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(225); Keyboard.release(225); Keyboard.press(234); Keyboard.release(234); Keyboard.press(234); Keyboard.release(234); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(225); Keyboard.release(225); Keyboard.press(234); Keyboard.release(234); Keyboard.press(225); Keyboard.release(225); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(225); Keyboard.release(225); Keyboard.press(234); Keyboard.release(234); Keyboard.press(226); Keyboard.release(226); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(225); Keyboard.release(225); Keyboard.press(234); Keyboard.release(234); Keyboard.press(227); Keyboard.release(227); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(225); Keyboard.release(225); Keyboard.press(234); Keyboard.release(234); Keyboard.press(228); Keyboard.release(228); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(225); Keyboard.release(225); Keyboard.press(234); Keyboard.release(234); Keyboard.press(229); Keyboard.release(229); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(225); Keyboard.release(225); Keyboard.press(234); Keyboard.release(234); Keyboard.press(230); Keyboard.release(230); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(225); Keyboard.release(225); Keyboard.press(234); Keyboard.release(234); Keyboard.press(231); Keyboard.release(231); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(225); Keyboard.release(225); Keyboard.press(234); Keyboard.release(234); Keyboard.press(232); Keyboard.release(232); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(225); Keyboard.release(225); Keyboard.press(234); Keyboard.release(234); Keyboard.press(233); Keyboard.release(233); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(225); Keyboard.release(225); Keyboard.press(225); Keyboard.release(225); Keyboard.press(234); Keyboard.release(234); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(225); Keyboard.release(225); Keyboard.press(225); Keyboard.release(225); Keyboard.press(225); Keyboard.release(225); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(225); Keyboard.release(225); Keyboard.press(225); Keyboard.release(225); Keyboard.press(226); Keyboard.release(226); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(225); Keyboard.release(225); Keyboard.press(225); Keyboard.release(225); Keyboard.press(227); Keyboard.release(227); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(225); Keyboard.release(225); Keyboard.press(225); Keyboard.release(225); Keyboard.press(228); Keyboard.release(228); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(225); Keyboard.release(225); Keyboard.press(225); Keyboard.release(225); Keyboard.press(229); Keyboard.release(229); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(225); Keyboard.release(225); Keyboard.press(225); Keyboard.release(225); Keyboard.press(230); Keyboard.release(230); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(225); Keyboard.release(225); Keyboard.press(225); Keyboard.release(225); Keyboard.press(231); Keyboard.release(231); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(225); Keyboard.release(225); Keyboard.press(225); Keyboard.release(225); Keyboard.press(232); Keyboard.release(232); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(225); Keyboard.release(225); Keyboard.press(225); Keyboard.release(225); Keyboard.press(233); Keyboard.release(233); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(225); Keyboard.release(225); Keyboard.press(226); Keyboard.release(226); Keyboard.press(234); Keyboard.release(234); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(225); Keyboard.release(225); Keyboard.press(226); Keyboard.release(226); Keyboard.press(225); Keyboard.release(225); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(225); Keyboard.release(225); Keyboard.press(226); Keyboard.release(226); Keyboard.press(226); Keyboard.release(226); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(230); Keyboard.release(230); Keyboard.press(229); Keyboard.release(229); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(230); Keyboard.release(230); Keyboard.press(230); Keyboard.release(230); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(230); Keyboard.release(230); Keyboard.press(231); Keyboard.release(231); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(230); Keyboard.release(230); Keyboard.press(232); Keyboard.release(232); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(230); Keyboard.release(230); Keyboard.press(233); Keyboard.release(233); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(231); Keyboard.release(231); Keyboard.press(234); Keyboard.release(234); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(231); Keyboard.release(231); Keyboard.press(225); Keyboard.release(225); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(231); Keyboard.release(231); Keyboard.press(226); Keyboard.release(226); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(231); Keyboard.release(231); Keyboard.press(227); Keyboard.release(227); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(231); Keyboard.release(231); Keyboard.press(228); Keyboard.release(228); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(231); Keyboard.release(231); Keyboard.press(229); Keyboard.release(229); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(231); Keyboard.release(231); Keyboard.press(230); Keyboard.release(230); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(231); Keyboard.release(231); Keyboard.press(231); Keyboard.release(231); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(231); Keyboard.release(231); Keyboard.press(232); Keyboard.release(232); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(231); Keyboard.release(231); Keyboard.press(233); Keyboard.release(233); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(232); Keyboard.release(232); Keyboard.press(234); Keyboard.release(234); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(232); Keyboard.release(232); Keyboard.press(225); Keyboard.release(225); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(232); Keyboard.release(232); Keyboard.press(226); Keyboard.release(226); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(232); Keyboard.release(232); Keyboard.press(227); Keyboard.release(227); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(232); Keyboard.release(232); Keyboard.press(228); Keyboard.release(228); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(232); Keyboard.release(232); Keyboard.press(229); Keyboard.release(229); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(232); Keyboard.release(232); Keyboard.press(230); Keyboard.release(230); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(232); Keyboard.release(232); Keyboard.press(231); Keyboard.release(231); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(232); Keyboard.release(232); Keyboard.press(232); Keyboard.release(232); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(232); Keyboard.release(232); Keyboard.press(233); Keyboard.release(233); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(233); Keyboard.release(233); Keyboard.press(234); Keyboard.release(234); Keyboard.release(KEY_LEFT_ALT); delay(10);
+
+
+
+
+
+
+
+
+
+
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(228); Keyboard.release(228); Keyboard.press(228); Keyboard.release(228); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(228); Keyboard.release(228); Keyboard.press(230); Keyboard.release(230); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(228); Keyboard.release(228); Keyboard.press(231); Keyboard.release(231); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(230); Keyboard.release(230); Keyboard.press(234); Keyboard.release(234); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(230); Keyboard.release(230); Keyboard.press(226); Keyboard.release(226); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(230); Keyboard.release(230); Keyboard.press(227); Keyboard.release(227); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(229); Keyboard.release(229); Keyboard.press(233); Keyboard.release(233); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(229); Keyboard.release(229); Keyboard.press(232); Keyboard.release(232); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(227); Keyboard.release(227); Keyboard.press(228); Keyboard.release(228); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(233); Keyboard.release(233); Keyboard.press(225); Keyboard.release(225); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(233); Keyboard.release(233); Keyboard.press(227); Keyboard.release(227); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(225); Keyboard.release(225); Keyboard.press(226); Keyboard.release(226); Keyboard.press(227); Keyboard.release(227); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(225); Keyboard.release(225); Keyboard.press(226); Keyboard.release(226); Keyboard.press(229); Keyboard.release(229); Keyboard.release(KEY_LEFT_ALT); delay(10);
+  delay(test);
+  delay(100);
+  delay(100);
+  delay(100);
+  delay(100);
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press('a'); Keyboard.releaseAll();
+  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(KEY_TAB); Keyboard.releaseAll();
+  Keyboard.press(KEY_LEFT_GUI); Keyboard.press('r'); Keyboard.releaseAll();
+  Keyboard.press(KEY_LEFT_GUI); Keyboard.press('a'); Keyboard.releaseAll();
+  Keyboard.press(KEY_LEFT_SHIFT); Keyboard.press(KEY_INSERT); Keyboard.releaseAll();
+  Keyboard.press(KEY_LEFT_SHIFT); Keyboard.press(  Keyboard.press(KEY_LEFT_ALT); Keyboard.press(233); Keyboard.release(233); Keyboard.press(231); Keyboard.release(231); Keyboard.release(KEY_LEFT_ALT); delay(10);); Keyboard.releaseAll();
+
+  // test
+  // End payload
+}
+
+// Unused
+void loop() {}
