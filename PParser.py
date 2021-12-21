@@ -1,3 +1,3 @@
-from pparser.core import entry_point
+from pparser.main import main
 
-entry_point()
+main()
