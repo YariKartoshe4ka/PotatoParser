@@ -1,3 +1,6 @@
+#!/usr/bin/env python
 from pparser.main import main
 
-main()
+
+if __name__ == '__main__':
+    main()

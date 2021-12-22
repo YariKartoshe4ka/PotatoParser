@@ -57,7 +57,7 @@ class PotatoParser:
 
                 return
 
-        self.processed_commands.append(UndefinedCommand())
+        self.processed_commands.append(UndefinedCommand(arg, self))
         self.log_error('Undefined command', f'`{cmd}`')
 
     def log_error(self, name, desc):

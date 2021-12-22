@@ -1,9 +1,11 @@
 __pycahe__/
-sketch.ino
-script.ducky
 *.pyc
+
 venv/
 build/
 dist/
 pparser.egg-info
-README.html
+
+sketch/
+script.ducky
+other/
