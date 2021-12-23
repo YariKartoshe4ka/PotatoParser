@@ -66,7 +66,7 @@ class PotatoParser:
         if self.args.error_ok:
             self.is_success = False
         else:
-            exit()
+            exit(1)
 
     def log_info(self, msg):
         print(f'{Style.BRIGHT}{Fore.BLACK}[*] {msg} (line {self.i + 1}){Style.RESET_ALL}')

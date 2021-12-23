@@ -24,7 +24,7 @@ class Sketch:
             self.content.append(write)
 
     def fprint(self, string=''):
-        self.file.write(string + '\n')
+        print(string, file=self.file)
 
     def make_indents(self, constructions, level=0, indented=None):
         if indented is None:
