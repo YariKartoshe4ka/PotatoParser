@@ -110,13 +110,17 @@ class REPEAT(DuckyCommand):
 
 
 class STRING(DuckyCommand):
-    payloads = [print_alt_string]
-
     def _parse_arg(self):
         if self.arg is None:
             raise CommandArgumentError('expected string, got nothing')
 
         arg = str(self.arg)
+
+        if self._pparser.args.disable_alt:
+            return arg
+
+        self.payloads.append(print_alt_string)
+
         for i, c in enumerate(arg):
             if c not in self._pparser.alphabet:
                 raise CommandArgumentError(f'undefined character of string `{c}` in {i + 1} position')
@@ -124,4 +128,6 @@ class STRING(DuckyCommand):
         return arg
 
     def _exec(self, arg):
+        if self._pparser.args.disable_alt:
+            return [f'Keyboard.print("{arg}");']
         return [f"print_alt_string({{{', '.join(str(self._pparser.alphabet[c]) + '_S' for c in arg)}}});"]

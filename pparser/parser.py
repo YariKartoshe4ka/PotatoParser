@@ -2,14 +2,11 @@ from json import load
 from pathlib import Path
 from sys import exit
 
-from colorama import init, Style, Fore
+from colorama import Style, Fore
 
 from .commands import *
 from .exceptions import *
 from .sketch import Sketch
-
-
-init()
 
 
 class PotatoParser:
