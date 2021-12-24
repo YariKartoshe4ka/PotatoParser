@@ -12,7 +12,7 @@ from .sketch import Sketch
 class PotatoParser:
     def __init__(self, args):
         self.args = args
-        self.sketch = Sketch(args.indent)
+        self.sketch = Sketch(args.output, args.indent)
         self.i = 0
         self.processed_commands = []
 

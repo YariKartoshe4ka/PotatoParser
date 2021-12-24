@@ -3,10 +3,11 @@ import os
 
 
 class Sketch:
-    def __init__(self, indent):
-        dirpath = Path('sketch').absolute()
-        os.makedirs(dirpath, exist_ok=True)
-        self.file = open(dirpath / 'sketch.ino', 'w')
+    def __init__(self, output, indent):
+        output = Path(output).absolute()
+        os.makedirs(output, exist_ok=True)
+
+        self.file = open(output / (output.name + '.ino'), 'w')
 
         self.indent = ' ' * indent
 

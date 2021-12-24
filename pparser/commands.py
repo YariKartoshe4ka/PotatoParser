@@ -119,11 +119,11 @@ class STRING(DuckyCommand):
         if self._pparser.args.disable_alt:
             return arg
 
-        self.payloads.append(print_alt_string)
-
         for i, c in enumerate(arg):
             if c not in self._pparser.alphabet:
                 raise CommandArgumentError(f'undefined character of string `{c}` in {i + 1} position')
+
+        self.payloads = [print_alt_string]
 
         return arg
 
