@@ -3,7 +3,7 @@ class Payload:
     depends = []
 
 
-class print_alt_string(Payload):
+class printAltString(Payload):
     text = [
         'unsigned short operator ""_S(unsigned long long x) {',
         [
@@ -11,7 +11,7 @@ class print_alt_string(Payload):
         ],
         '}',
         '',
-        'template <size_t N> void print_alt_string(const unsigned short (&codes)[N]) {',
+        'template <size_t N> void printAltString(const unsigned short (&codes)[N], int delayTec = 0) {',
         [
             'for (int code : codes) {',
             [
@@ -22,10 +22,27 @@ class print_alt_string(Payload):
                 [
                     'byte k = (code / i % 10 == 0 ? 234 : code / i % 10 + 224);',
                     'Keyboard.press(k);',
-                    'Keyboard.release(k);'
+                    'delay(50);',
+                    'Keyboard.release(k);',
+                    'delay(delayTec);'
                 ],
                 '}',
                 'Keyboard.release(KEY_LEFT_ALT);'
+            ],
+            '}'
+        ],
+        '}'
+    ]
+
+
+class printDefaultString(Payload):
+    text = [
+        'void printDefaultString(String string, int delayTec = 0) {',
+        [
+            'for (char c : string) {',
+            [
+                'Keyboard.print(string);',
+                'delay(delayTec);'
             ],
             '}'
         ],

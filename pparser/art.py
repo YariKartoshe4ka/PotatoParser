@@ -16,7 +16,18 @@ Y = Style.RESET_ALL + Style.BRIGHT + Fore.YELLOW    # Yellow
 R = Style.RESET_ALL                                 # Reset
 
 
-__art = '''
+def get_remote_version():
+    try:
+        r = get('https://pypi.org/pypi/pparser/json', timeout=0.1)
+
+        return max(r.json()['releases'], key=lambda x: parse(x))
+
+    except Exception:
+        return ''
+
+
+def gen_art():
+    art = '''
                             W/:
                           /:YsWN   /.
                         /:Y++/Wm++o+:
@@ -37,25 +48,13 @@ __art = '''
 '''
 
 
-__art = __art.replace('C', C) \
-    .replace('W', W) \
-    .replace('B', B) \
-    .replace('G', G) \
-    .replace('Y', Y) \
-    .replace('R', R)
+    art = art.replace('C', C) \
+        .replace('W', W) \
+        .replace('B', B) \
+        .replace('G', G) \
+        .replace('Y', Y) \
+        .replace('R', R)
 
-
-def get_remote_version():
-    try:
-        r = get('https://pypi.org/pypi/pparser/json', timeout=0.1)
-
-        return max(r.json()['releases'], key=lambda x: parse(x))
-
-    except Exception:
-        return ''
-
-
-def gen_art():
     remote_version = get_remote_version()
 
     if parse(remote_version) > parse(__version__):
@@ -63,7 +62,7 @@ def gen_art():
     else:
         new_update = f'{W}unavailable'
 
-    return __art.format(
+    return art.format(
         f'{Y}PotatoParser{W} by YariKartoshe4ka{R}',
         f'{Y}Current version:{W} {__version__}{R}',
         f"{Y}New update: {new_update}{R}"

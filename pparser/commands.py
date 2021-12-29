@@ -109,10 +109,51 @@ class REPEAT(DuckyCommand):
             raise CommandInfoError('Command skipped due to inoperability of previous')
 
 
+class STRINGDELAY(DuckyCommand):
+    def _parse_arg(self):
+        self.payloads = [printDefaultString]
+
+        if self.arg is None:
+            raise CommandArgumentError('expected 2 arguments, but got nothing')
+
+        args = self.arg.split(' ', 1)
+
+        if len(args) < 2:
+            raise CommandArgumentError(f'expected 2 arguments, but got {len(args)}')
+
+        try:
+            args[0] = int(args[0])
+            assert 1 <= args[0] <= 10000
+        except (TypeError, ValueError, AssertionError):
+            raise CommandArgumentError('first argument expected as integer in range from 1 to 10^5')
+
+        if self._pparser.args.disable_alt:
+            return args
+
+        for i, c in enumerate(args[1]):
+            if c not in self._pparser.alphabet:
+                raise CommandArgumentError(f'undefined character of string `{c}` in {i + 1} position')
+
+        self.payloads = [printAltString]
+
+        return args
+
+    def _exec(self, arg):
+        if self._pparser.args.disable_alt:
+            return [f'printDefaultString(F("{arg[1]}"), {arg[0]});']
+        return [f"printAltString({{{', '.join(str(self._pparser.alphabet[c]) + '_S' for c in arg[1])}}}, {arg[0]});"]
+
+
+class STRING_DELAY(STRINGDELAY, DuckyCommand):
+    pass
+
+
 class STRING(DuckyCommand):
     def _parse_arg(self):
+        self.payloads = [printDefaultString]
+
         if self.arg is None:
-            raise CommandArgumentError('expected string, got nothing')
+            raise CommandArgumentError('expected string, but got nothing')
 
         arg = str(self.arg)
 
@@ -123,11 +164,11 @@ class STRING(DuckyCommand):
             if c not in self._pparser.alphabet:
                 raise CommandArgumentError(f'undefined character of string `{c}` in {i + 1} position')
 
-        self.payloads = [print_alt_string]
+        self.payloads = [printAltString]
 
         return arg
 
     def _exec(self, arg):
         if self._pparser.args.disable_alt:
-            return [f'Keyboard.print("{arg}");']
-        return [f"print_alt_string({{{', '.join(str(self._pparser.alphabet[c]) + '_S' for c in arg)}}});"]
+            return [f'printDefaultString(F("{arg}"));']
+        return [f"printAltString({{{', '.join(str(self._pparser.alphabet[c]) + '_S' for c in arg)}}});"]
