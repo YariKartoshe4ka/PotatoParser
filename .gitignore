@@ -9,3 +9,5 @@ pparser.egg-info
 sketch/
 script.ducky
 other/
+
+docs/_build

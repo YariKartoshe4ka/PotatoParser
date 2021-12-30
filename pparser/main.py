@@ -9,6 +9,7 @@ from .art import gen_art
 
 
 def main():
+    """Super Doc string """
     init()
 
     parser = ArgumentParser(description='Potato Parser')

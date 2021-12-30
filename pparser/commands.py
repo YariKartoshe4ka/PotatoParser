@@ -31,10 +31,36 @@ class UndefinedCommand(DuckyCommand):
 
 
 class REM(DuckyCommand):
+    """Similar to the **REM** command in Basic and other languages, lines
+    beginning with **REM** will not be processed. **REM** is a comment
+
+    :syntax: *REM <comment>*
+    :param comment: Comment string
+    :example:
+
+    ::
+
+        REM This is a comment!
+    """
     pass
 
 
 class DELAY(DuckyCommand):
+    """Command creates a momentary pause in the ducky script. It is quite handy
+    for creating a moment of pause between sequential commands that may take
+    the target computer some time to process. Multiple **DELAY** commands can
+    be used to create longer delays
+
+    :syntax: *DELAY <time>*
+    :param time: Time to pause in milliseconds :math:`\\in [1, 10^5]`
+    :example:
+
+    ::
+
+        DELAY 5000
+        REM I just waited 5 seconds!
+    """
+
     def _parse_arg(self):
         try:
             arg = int(self.arg)
@@ -48,7 +74,26 @@ class DELAY(DuckyCommand):
         return [f'delay({arg});']
 
 
-class DEFAULT_DELAY(DELAY, DuckyCommand):
+class DEFAULTDELAY(DELAY, DuckyCommand):
+    """**DEFAULTDELAY** or **DEFAULT_DELAY** is used to define how long to wait
+    between each subsequent command. Command must be issued at the beginning of
+    the ducky script and is optional. Not specifying the command will result in
+    faster execution of ducky scripts. This command is mostly useful when
+    debugging
+
+    :syntax: - *DEFAULTDELAY <time>*
+             - *DEFAULT_DELAY <time>*
+    :param time: Time to pause in milliseconds :math:`\\in [1, 10^5]`
+    :example:
+
+    ::
+
+        DEFAULTDELAY 500
+        DELAY 750
+        DELAY 750
+        REM The total pause is 2 seconds
+    """
+
     def _exec(self, arg):
         if self._pparser.processed_commands:
             raise CommandUsageError('command can be used once at the top of script')
@@ -65,20 +110,33 @@ class DEFAULT_DELAY(DELAY, DuckyCommand):
         return super()._exec(arg)
 
 
-class DEFAULTDELAY(DEFAULT_DELAY, DuckyCommand):
+class DEFAULT_DELAY(DEFAULTDELAY, DuckyCommand):
     pass
 
 
-class ENTER(DuckyCommand):
-    def _parse_arg(self):
-        if self.arg is not None:
-            raise CommandArgumentError("command doesn't accept any arguments")
-
-    def _exec(self, arg):
-        return ['Keyboard.press(KEY_RETURN); Keyboard.release(KEY_RETURN);']
-
-
 class REPEAT(DuckyCommand):
+    """Repeats the last command several times
+
+    :syntax: REPEAT <num>
+    :param num: number of repetitions
+    :example:
+
+    ::
+
+        DELAY 500
+        REPEAT 5
+        REM The total pause is 3 seconds
+
+    .. note::
+
+        1. Command cannot be called at the beginning of the script, because it
+           will not be able to repeat any command
+        2. Command cannot repeat several types of commands: :class:`REM`,
+           :class:`DEFAULTDELAY`, :class:`DEFAULT_DELAY`, :class:`REPEAT`
+        3. Delay will not be called per repeat if the :class:`DEFAULTDELAY`
+           or :class:`DEFAULT_DELAY` was called at the beginning of the file
+    """
+
     def _parse_arg(self):
         try:
             arg = int(self.arg)
@@ -172,3 +230,12 @@ class STRING(DuckyCommand):
         if self._pparser.args.disable_alt:
             return [f'printDefaultString(F("{arg}"));']
         return [f"printAltString({{{', '.join(str(self._pparser.alphabet[c]) + '_S' for c in arg)}}});"]
+
+
+class ENTER(DuckyCommand):
+    def _parse_arg(self):
+        if self.arg is not None:
+            raise CommandArgumentError("command doesn't accept any arguments")
+
+    def _exec(self, arg):
+        return ['Keyboard.press(KEY_RETURN); Keyboard.release(KEY_RETURN);']

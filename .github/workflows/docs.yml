@@ -1,0 +1,18 @@
+on:
+  push:
+    branch:
+      - master
+
+name: Docs
+
+jobs:
+  build:
+    name: Build Pages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build Docs
+        uses: seanzhengw/sphinx-pages@master
+        id: sphinx-pages
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          source_dir: docs
