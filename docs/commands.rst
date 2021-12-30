@@ -1,6 +1,8 @@
 Ducky commands
 ~~~~~~~~~~~~~~
 
+All commands which supported by the parser are described here
+
 
 REM
 ===
@@ -24,3 +26,9 @@ REPEAT
 ======
 
 .. autoclass:: pparser.commands.REPEAT
+
+
+STRING
+======
+
+.. autoclass:: pparser.commands.STRING

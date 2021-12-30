@@ -118,7 +118,7 @@ class REPEAT(DuckyCommand):
     """Repeats the last command several times
 
     :syntax: REPEAT <num>
-    :param num: number of repetitions
+    :param num: Number of repetitions
     :example:
 
     ::
@@ -167,6 +167,48 @@ class REPEAT(DuckyCommand):
             raise CommandInfoError('Command skipped due to inoperability of previous')
 
 
+class STRING(DuckyCommand):
+    """Processes the text in two modes (you can choose one)
+
+    1. ALT (each character is entered as an ALT code)
+    2. non-ALT (entered as a normal keystroke, only characters which
+       supported on a specific keyboard layout
+
+    :syntax: STRING <string>
+    :param string: Text to print
+    :example:
+
+    ::
+
+        STRING Hello World!
+        STRING Another text :)
+    """
+
+    def _parse_arg(self):
+        self.payloads = [printDefaultString]
+
+        if self.arg is None:
+            raise CommandArgumentError('expected string, but got nothing')
+
+        arg = str(self.arg)
+
+        if self._pparser.args.disable_alt:
+            return arg
+
+        for i, c in enumerate(arg):
+            if c not in self._pparser.alphabet:
+                raise CommandArgumentError(f'undefined character of string `{c}` in {i + 1} position')
+
+        self.payloads = [printAltString]
+
+        return arg
+
+    def _exec(self, arg):
+        if self._pparser.args.disable_alt:
+            return [f'printDefaultString(F("{arg}"));']
+        return [f"printAltString({{{', '.join(str(self._pparser.alphabet[c]) + '_S' for c in arg)}}});"]
+
+
 class STRINGDELAY(DuckyCommand):
     def _parse_arg(self):
         self.payloads = [printDefaultString]
@@ -204,32 +246,6 @@ class STRINGDELAY(DuckyCommand):
 
 class STRING_DELAY(STRINGDELAY, DuckyCommand):
     pass
-
-
-class STRING(DuckyCommand):
-    def _parse_arg(self):
-        self.payloads = [printDefaultString]
-
-        if self.arg is None:
-            raise CommandArgumentError('expected string, but got nothing')
-
-        arg = str(self.arg)
-
-        if self._pparser.args.disable_alt:
-            return arg
-
-        for i, c in enumerate(arg):
-            if c not in self._pparser.alphabet:
-                raise CommandArgumentError(f'undefined character of string `{c}` in {i + 1} position')
-
-        self.payloads = [printAltString]
-
-        return arg
-
-    def _exec(self, arg):
-        if self._pparser.args.disable_alt:
-            return [f'printDefaultString(F("{arg}"));']
-        return [f"printAltString({{{', '.join(str(self._pparser.alphabet[c]) + '_S' for c in arg)}}});"]
 
 
 class ENTER(DuckyCommand):

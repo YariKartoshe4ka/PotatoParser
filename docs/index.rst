@@ -6,7 +6,9 @@ Welcome to PotatoParser's documentation!
    :caption: Contents:
 
    about
+   quickstart
    commands
+   options
 
 
 
