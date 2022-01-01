@@ -117,7 +117,7 @@ class DEFAULT_DELAY(DEFAULTDELAY, DuckyCommand):
 class REPEAT(DuckyCommand):
     """Repeats the last command several times
 
-    :syntax: REPEAT <num>
+    :syntax: *REPEAT <num>*
     :param num: Number of repetitions
     :example:
 
@@ -174,7 +174,7 @@ class STRING(DuckyCommand):
     2. non-ALT (entered as a normal keystroke, only characters which
        supported on a specific keyboard layout
 
-    :syntax: STRING <string>
+    :syntax: *STRING <string>*
     :param string: Text to print
     :example:
 
@@ -210,6 +210,27 @@ class STRING(DuckyCommand):
 
 
 class STRINGDELAY(DuckyCommand):
+    """Processes the text in two modes (you can choose one) with a certain
+    speed characters typing
+
+    1. ALT (each character is entered as an ALT code)
+    2. non-ALT (entered as a normal keystroke, only characters which
+       supported on a specific keyboard layout
+
+    :syntax: - *STRINGDELAY <time> <string>*
+             - *STRING_DELAY <time> <string>*
+
+    :param time: Time to pause per character in milliseconds :math:`\\in [1, 10^5]`
+    :param string: Text to print
+    :example:
+
+    ::
+
+        STRINGDELAY 200 Hello World!
+        STRING_DELAY 300 Another text
+        REM These commands takes 6 seconds!
+    """
+
     def _parse_arg(self):
         self.payloads = [printDefaultString]
 

@@ -32,3 +32,9 @@ STRING
 ======
 
 .. autoclass:: pparser.commands.STRING
+
+
+STRINGDELAY & STRING_DELAY
+==========================
+
+.. autoclass:: pparser.commands.STRINGDELAY
