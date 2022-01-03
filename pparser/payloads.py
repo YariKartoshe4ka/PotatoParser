@@ -3,15 +3,29 @@ class Payload:
     depends = []
 
 
-class printAltString(Payload):
+class pressSingleKey(Payload):
     text = [
-        'unsigned short operator ""_S(unsigned long long x) {',
+        'void pressSingleKey(uint8_t key) {',
         [
-            'return (unsigned short)x;'
+            'Keyboard.press(key);',
+            'delay(20);',
+            'Keyboard.release(key);'
+        ],
+        '}'
+    ]
+
+
+class printAltString(Payload):
+    depends = [pressSingleKey]
+
+    text = [
+        'uint16_t operator ""_S(unsigned long long x) {',
+        [
+            'return (uint16_t)x;'
         ],
         '}',
         '',
-        'template <size_t N> void printAltString(const unsigned short (&codes)[N], int delayTec = 0) {',
+        'template <size_t N> void printAltString(const uint16_t (&codes)[N], int delayTec = 0) {',
         [
             'for (int code : codes) {',
             [
@@ -21,9 +35,7 @@ class printAltString(Payload):
                 'for (int i = d; i > 0; i /= 10) {',
                 [
                     'byte k = (code / i % 10 == 0 ? 234 : code / i % 10 + 224);',
-                    'Keyboard.press(k);',
-                    'delay(50);',
-                    'Keyboard.release(k);',
+                    'pressSingleKey(k);',
                     'delay(delayTec);'
                 ],
                 '}',
@@ -36,12 +48,14 @@ class printAltString(Payload):
 
 
 class printDefaultString(Payload):
+    depends = [pressSingleKey]
+
     text = [
         'void printDefaultString(String string, int delayTec = 0) {',
         [
             'for (char c : string) {',
             [
-                'Keyboard.print(string);',
+                'pressSingleKey(c);',
                 'delay(delayTec);'
             ],
             '}'

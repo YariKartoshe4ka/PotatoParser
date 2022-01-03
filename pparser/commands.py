@@ -269,10 +269,79 @@ class STRING_DELAY(STRINGDELAY, DuckyCommand):
     pass
 
 
-class ENTER(DuckyCommand):
+single_keys = {
+    'MENU':         'KEY_MENU',
+    'APP':          'KEY_MENU',
+    'DOWNARROW':    'KEY_DOWN_ARROW',
+    'DOWN':         'KEY_DOWN_ARROW',
+    'UPARROW':      'KEY_UP_ARROW',
+    'UP':           'KEY_UP_ARROW',
+    'LEFTARROW':    'KEY_LEFT_ARROW',
+    'LEFT':         'KEY_LEFT_ARROW',
+    'RIGHTARROW':   'KEY_RIGHT_ARROW',
+    'RIGHT':        'KEY_RIGHT_ARROW',
+    'DELETE':       'KEY_DELETE',
+    'END':          'KEY_END',
+    'HOME':         'KEY_HOME',
+    'INSERT':       'KEY_INSERT',
+    'PAGEUP':       'KEY_PAGE_UP',
+    'PAGEDOWN':     'KEY_PAGE_DOWN',
+    'PRINTSCREEN':  'KEY_PRINT_SCREEN',
+    'PRINTSCRN':    'KEY_PRINT_SCREEN',
+    'PRNTSCRN':     'KEY_PRINT_SCREEN',
+    'PRTSCN':       'KEY_PRINT_SCREEN',
+    'PRSC':         'KEY_PRINT_SCREEN',
+    'PRTSCR':       'KEY_PRINT_SCREEN',
+    'BREAK':        'KEY_PAUSE',
+    'PAUSE':        'KEY_PAUSE',
+    'NUMLOCK':      'KEY_NUM_LOCK',
+    'CAPSLOCK':     'KEY_CAPS_LOCK',
+    'SCROLLLOCK':   'KEY_SCROLL_LOCK',
+    'ESC':          'KEY_ESC',
+    'ESCAPE':       'KEY_ESC',
+    'SPACE':        '\' \'',
+    'TAB':          'KEY_TAB',
+    'BACKSPACE':    'KEY_BACKSPACE',
+    'BKSP':         'KEY_BACKSPACE',
+    'ENTER':        'KEY_RETURN',
+    'F1':           'KEY_F1',
+    'F2':           'KEY_F2',
+    'F3':           'KEY_F3',
+    'F4':           'KEY_F4',
+    'F5':           'KEY_F5',
+    'F6':           'KEY_F6',
+    'F7':           'KEY_F7',
+    'F8':           'KEY_F8',
+    'F9':           'KEY_F9',
+    'F10':          'KEY_F10',
+    'F11':          'KEY_F11',
+    'F12':          'KEY_F12',
+    'F13':          'KEY_F13',
+    'F14':          'KEY_F14',
+    'F15':          'KEY_F15',
+    'F16':          'KEY_F16',
+    'F17':          'KEY_F17',
+    'F18':          'KEY_F18',
+    'F19':          'KEY_F19',
+    'F20':          'KEY_F20',
+    'F21':          'KEY_F21',
+    'F22':          'KEY_F22',
+    'F23':          'KEY_F23',
+    'F24':          'KEY_F24',
+}
+
+
+class SingleKey(DuckyCommand):
+    payloads = [pressSingleKey]
+    key = ''
+
     def _parse_arg(self):
         if self.arg is not None:
             raise CommandArgumentError("command doesn't accept any arguments")
 
     def _exec(self, arg):
-        return ['Keyboard.press(KEY_RETURN); Keyboard.release(KEY_RETURN);']
+        return [f'pressSingleKey({self.key});']
+
+
+for name, key in single_keys.items():
+    locals()[name] = type(name, (SingleKey, DuckyCommand), {'key': key})

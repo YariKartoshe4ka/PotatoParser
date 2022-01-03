@@ -1,3 +1,4 @@
+from collections import deque
 from pathlib import Path
 import os
 
@@ -19,7 +20,21 @@ class Sketch:
 
     def add(self, write, payloads=[]):
         if payloads:
-            self.payloads.add(*payloads)
+            used = {}
+            payloads = deque(payloads)
+
+            while payloads:
+                payload = payloads.popleft()
+
+                if used.get(payload):
+                    continue
+
+                used[payload] = True
+                for depend in payload.depends:
+                    payloads.append(depend)
+
+            for payload in used:
+                self.payloads.add(payload)
 
         if write:
             self.content.append(write)
@@ -59,10 +74,16 @@ class Sketch:
         self.fprint(f'''void setup() {{
 {self.indent}// Initialize keyboard library
 {self.indent}Keyboard.begin();
+{self.indent}delay(2500);
 
 {self.indent}// Start of payload''')
 
         for line in self.make_indents(self.content):
             self.fprint(line)
 
-        self.fprint('}\n\nvoid loop() { }')
+        self.fprint(f'''
+{self.indent}// De-initialize keyboard library
+{self.indent}Keyboard.end();
+}}
+
+void loop() {{ }}''')
