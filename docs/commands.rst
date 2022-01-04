@@ -38,3 +38,9 @@ STRINGDELAY & STRING_DELAY
 ==========================
 
 .. autoclass:: pparser.commands.STRINGDELAY
+
+
+Single Key
+==========
+
+.. autoclass:: pparser.commands.SingleKey

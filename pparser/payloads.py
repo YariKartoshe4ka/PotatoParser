@@ -1,9 +1,11 @@
 class Payload:
-    text = []
     depends = []
+    header = ''
+    text = []
 
 
 class pressSingleKey(Payload):
+    header = 'void pressSingleKey(uint8_t key);'
     text = [
         'void pressSingleKey(uint8_t key) {',
         [
@@ -16,6 +18,9 @@ class pressSingleKey(Payload):
 
 
 class printAltString(Payload):
+    header = '''uint16_t operator ""_S(unsigned long long x);
+template <size_t N> void printAltString(const uint16_t (&codes)[N], int delayTec = 0);'''
+
     depends = [pressSingleKey]
 
     text = [
@@ -25,7 +30,7 @@ class printAltString(Payload):
         ],
         '}',
         '',
-        'template <size_t N> void printAltString(const uint16_t (&codes)[N], int delayTec = 0) {',
+        'template <size_t N> void printAltString(const uint16_t (&codes)[N], int delayTec) {',
         [
             'for (int code : codes) {',
             [
@@ -48,10 +53,11 @@ class printAltString(Payload):
 
 
 class printDefaultString(Payload):
+    header = 'void printDefaultString(String string, int delayTec = 0);'
     depends = [pressSingleKey]
 
     text = [
-        'void printDefaultString(String string, int delayTec = 0) {',
+        'void printDefaultString(String string, int delayTec) {',
         [
             'for (char c : string) {',
             [

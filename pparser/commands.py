@@ -269,69 +269,89 @@ class STRING_DELAY(STRINGDELAY, DuckyCommand):
     pass
 
 
+"""Available keys for :class:`SingleKey` defined in `single_keys`
+in the following format::
+
+    single_keys = {
+        ('KEY_1', 'ALIAS_1_KEY_1', ..., 'ALIAS_N_KEY_1'): ('CONST_KEY_1', 'KEY_1_DESCRIPTION'),
+        ('KEY_2', 'ALIAS_1_KEY_2', ..., 'ALIAS_N_KEY_2'): ('CONST_KEY_2', 'KEY_2_DESCRIPTION'),
+         ...
+        ('KEY_N', 'ALIAS_1_KEY_N', ..., 'ALIAS_N_KEY_N'): ('CONST_KEY_N', 'KEY_N_DESCRIPTION')
+    }
+"""
+
 single_keys = {
-    'MENU':         'KEY_MENU',
-    'APP':          'KEY_MENU',
-    'DOWNARROW':    'KEY_DOWN_ARROW',
-    'DOWN':         'KEY_DOWN_ARROW',
-    'UPARROW':      'KEY_UP_ARROW',
-    'UP':           'KEY_UP_ARROW',
-    'LEFTARROW':    'KEY_LEFT_ARROW',
-    'LEFT':         'KEY_LEFT_ARROW',
-    'RIGHTARROW':   'KEY_RIGHT_ARROW',
-    'RIGHT':        'KEY_RIGHT_ARROW',
-    'DELETE':       'KEY_DELETE',
-    'END':          'KEY_END',
-    'HOME':         'KEY_HOME',
-    'INSERT':       'KEY_INSERT',
-    'PAGEUP':       'KEY_PAGE_UP',
-    'PAGEDOWN':     'KEY_PAGE_DOWN',
-    'PRINTSCREEN':  'KEY_PRINT_SCREEN',
-    'PRINTSCRN':    'KEY_PRINT_SCREEN',
-    'PRNTSCRN':     'KEY_PRINT_SCREEN',
-    'PRTSCN':       'KEY_PRINT_SCREEN',
-    'PRSC':         'KEY_PRINT_SCREEN',
-    'PRTSCR':       'KEY_PRINT_SCREEN',
-    'BREAK':        'KEY_PAUSE',
-    'PAUSE':        'KEY_PAUSE',
-    'NUMLOCK':      'KEY_NUM_LOCK',
-    'CAPSLOCK':     'KEY_CAPS_LOCK',
-    'SCROLLLOCK':   'KEY_SCROLL_LOCK',
-    'ESC':          'KEY_ESC',
-    'ESCAPE':       'KEY_ESC',
-    'SPACE':        '\' \'',
-    'TAB':          'KEY_TAB',
-    'BACKSPACE':    'KEY_BACKSPACE',
-    'BKSP':         'KEY_BACKSPACE',
-    'ENTER':        'KEY_RETURN',
-    'F1':           'KEY_F1',
-    'F2':           'KEY_F2',
-    'F3':           'KEY_F3',
-    'F4':           'KEY_F4',
-    'F5':           'KEY_F5',
-    'F6':           'KEY_F6',
-    'F7':           'KEY_F7',
-    'F8':           'KEY_F8',
-    'F9':           'KEY_F9',
-    'F10':          'KEY_F10',
-    'F11':          'KEY_F11',
-    'F12':          'KEY_F12',
-    'F13':          'KEY_F13',
-    'F14':          'KEY_F14',
-    'F15':          'KEY_F15',
-    'F16':          'KEY_F16',
-    'F17':          'KEY_F17',
-    'F18':          'KEY_F18',
-    'F19':          'KEY_F19',
-    'F20':          'KEY_F20',
-    'F21':          'KEY_F21',
-    'F22':          'KEY_F22',
-    'F23':          'KEY_F23',
-    'F24':          'KEY_F24',
+    ('MENU', 'APP'): ('KEY_MENU', 'Emulates the App key, sometimes referred to as the menu key or context menu key. On Windows systems this is similar to the SHIFT F10 key combo, producing the menu similar to a right-click'),
+    ('DOWNARROW', 'DOWN'): ('KEY_DOWN_ARROW', 'Emulates down arrow key'),
+    ('UPARROW', 'UP'): ('KEY_UP_ARROW', 'Emulates down arrow key'),
+    ('LEFTARROW', 'LEFT'): ('KEY_LEFT_ARROW', 'Emulates left arrow key'),
+    ('RIGHTARROW', 'RIGHT'): ('KEY_RIGHT_ARROW', 'Emulates right arrow key'),
+    ('DELETE',): ('KEY_DELETE', 'Emulates delete key'),
+    ('END',): ('KEY_END', 'Emulates end key'),
+    ('HOME',): ('KEY_HOME', 'Emulates home key'),
+    ('INSERT',): ('KEY_INSERT', 'Emulates insert key'),
+    ('PAGEUP',): ('KEY_PAGE_UP', 'Emulates page up key'),
+    ('PAGEDOWN',): ('KEY_PAGE_DOWN', 'Emulated page down key'),
+    ('PRINTSCREEN', 'PRINTSCRN', 'PRNTSCRN', 'PRTSCN', 'PRSC', 'PRTSCR'): ('KEY_PRINT_SCREEN', 'Emulates PrtSc (Print Screen) key, which typically takes screenshots'),
+    ('BREAK', 'PAUSE'): ('KEY_PAUSE', 'Emulates Pause/Break key'),
+    ('NUMLOCK',): ('KEY_NUM_LOCK', 'Toggle numlock'),
+    ('CAPSLOCK',): ('KEY_CAPS_LOCK', 'Toggle capslock'),
+    ('SCROLLLOCK',): ('KEY_SCROLL_LOCK', 'Toggle scroll lock'),
+    ('ESC', 'ESCAPE'): ('KEY_ESC', 'Emulates esc key'),
+    ('SPACE',): ("' '", 'Emulates spacebar'),
+    ('TAB',): ('KEY_TAB', 'Emulates tab key'),
+    ('BACKSPACE', 'BKSP'): ('KEY_BACKSPACE', 'Emulates backspace key. On MacOS this is the delete key'),
+    ('ENTER',): ('KEY_RETURN', 'Emulates enter key'),
+    ('F1',): ('KEY_F1', 'Emulates F1 key'),
+    ('F2',): ('KEY_F2', 'Emulates F2 key'),
+    ('F3',): ('KEY_F3', 'Emulates F3 key'),
+    ('F4',): ('KEY_F4', 'Emulates F4 key'),
+    ('F5',): ('KEY_F5', 'Emulates F5 key'),
+    ('F6',): ('KEY_F6', 'Emulates F6 key'),
+    ('F7',): ('KEY_F7', 'Emulates F7 key'),
+    ('F8',): ('KEY_F8', 'Emulates F8 key'),
+    ('F9',): ('KEY_F9', 'Emulates F9 key'),
+    ('F10',): ('KEY_F10', 'Emulates F10 key'),
+    ('F11',): ('KEY_F11', 'Emulates F11 key'),
+    ('F12',): ('KEY_F12', 'Emulates F12 key'),
+    ('F13',): ('KEY_F13', 'Emulates F13 key'),
+    ('F14',): ('KEY_F14', 'Emulates F14 key'),
+    ('F15',): ('KEY_F15', 'Emulates F15 key'),
+    ('F16',): ('KEY_F16', 'Emulates F16 key'),
+    ('F17',): ('KEY_F17', 'Emulates F17 key'),
+    ('F18',): ('KEY_F18', 'Emulates F18 key'),
+    ('F19',): ('KEY_F19', 'Emulates F19 key'),
+    ('F20',): ('KEY_F20', 'Emulates F20 key'),
+    ('F21',): ('KEY_F21', 'Emulates F21 key'),
+    ('F22',): ('KEY_F22', 'Emulates F22 key'),
+    ('F23',): ('KEY_F23', 'Emulates F23 key'),
+    ('F24',): ('KEY_F24', 'Emulates F24 key'),
 }
 
 
 class SingleKey(DuckyCommand):
+    """Emulates one special key. The list of available keys and their
+    description are below
+
+    :syntax: *<key>*
+    :param key: Key to emulate
+    :example:
+
+    ::
+
+        STRING Hello World!
+        HOME
+        REM I moved to the beginning of the line!
+
+    .. csv-table:: Supported Keys
+        :header: "Key", "Description"
+        :widths: 15, 30
+
+"""
+
+    for k, v in single_keys.items():
+        __doc__ += ' ' * 8 + f'"{" or ".join(k)}", "{v[1]}"\n'
+
     payloads = [pressSingleKey]
     key = ''
 
@@ -343,5 +363,7 @@ class SingleKey(DuckyCommand):
         return [f'pressSingleKey({self.key});']
 
 
-for name, key in single_keys.items():
-    locals()[name] = type(name, (SingleKey, DuckyCommand), {'key': key})
+for names, key_and_desc in single_keys.items():
+    key, desc = key_and_desc
+    for name in names:
+        locals()[name] = type(name, (SingleKey, DuckyCommand), {'key': key})

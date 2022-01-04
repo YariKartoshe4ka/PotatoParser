@@ -67,11 +67,16 @@ class Sketch:
 ''')
 
         for payload in self.payloads:
+            self.fprint(payload.header)
+        self.fprint()
+
+        for payload in self.payloads:
             for line in self.make_indents(payload.text):
                 self.fprint(line)
             self.fprint()
 
-        self.fprint(f'''void setup() {{
+        self.fprint(f'''
+void setup() {{
 {self.indent}// Initialize keyboard library
 {self.indent}Keyboard.begin();
 {self.indent}delay(2500);
