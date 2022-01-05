@@ -10,7 +10,7 @@ from .parser import PotatoParser
 from .art import gen_art
 
 
-def main(argv=argv):
+def main(argv=argv[1:]):
     """Main entrypoint of PotatoParser
 
     Args:
@@ -30,7 +30,7 @@ def main(argv=argv):
     group.add_argument('-a', dest='alphabets', type=Path, metavar='ALPHABET', action='append', help='Path to additional alphabets of ALT codes ', default=[])
     group.add_argument('--disable-alt', action='store_true', help='Don\'t parse strings to ALT codes sequences')
 
-    args = parser.parse_args(argv)
+    args = parser.parse_args()
 
     if not args.quiet:
         print(gen_art())
@@ -40,7 +40,7 @@ def main(argv=argv):
 
     with open(args.source, encoding='utf-8') as source:
         for line in source:
-            pparser.exec(*line.rstrip().split(' ', 1))
+            pparser.exec(*line.rstrip('\n').split(' ', 1))
             pparser.i += 1
 
     pparser.sketch.flush()

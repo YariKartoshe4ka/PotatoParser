@@ -17,6 +17,24 @@ class pressSingleKey(Payload):
     ]
 
 
+class pressComboKey(Payload):
+    header = 'template <size_t N> void pressComboKey(const uint8_t (&keys)[N]);'
+    text = [
+        'template <size_t N> void pressComboKey(const uint8_t (&keys)[N]) {',
+        [
+            'for (uint8_t key : keys) {',
+            [
+                'Keyboard.press(key);',
+                'delay(20);',
+            ],
+            '}',
+            'delay(50);',
+            'Keyboard.releaseAll();'
+        ],
+        '}'
+    ]
+
+
 class printAltString(Payload):
     header = '''uint16_t operator ""_S(unsigned long long x);
 template <size_t N> void printAltString(const uint16_t (&codes)[N], int delayTec = 0);'''
@@ -32,7 +50,7 @@ template <size_t N> void printAltString(const uint16_t (&codes)[N], int delayTec
         '',
         'template <size_t N> void printAltString(const uint16_t (&codes)[N], int delayTec) {',
         [
-            'for (int code : codes) {',
+            'for (uint16_t code : codes) {',
             [
                 'int d = 1;',
                 'while (d <= code / 10) d *= 10;',

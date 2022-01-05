@@ -7,7 +7,7 @@ from .payloads import *
 
 class DuckyCommand:
     """Abstract class of Ducky commands. Service commands (which cannot be
-    called from a script) have names in the camelCase style, and work
+    called from a script) have names in the CamelCase style, and work
     commands have the CAPSLOCK style
 
     Args:
@@ -352,7 +352,9 @@ class STRING_DELAY(STRINGDELAY, DuckyCommand):
 
 
 """Available keys for :class:`SingleKey` defined in `single_keys`
-in the following format::
+in the following format
+
+.. code-block:: python
 
     single_keys = {
         ('KEY_1', 'ALIAS_1_KEY_1', ..., 'ALIAS_N_KEY_1'): ('CONST_KEY_1', 'KEY_1_DESCRIPTION'),
@@ -424,7 +426,7 @@ class SingleKey(DuckyCommand):
         HOME
         REM I moved to the beginning of the line!
 
-    .. csv-table:: Supported Keys
+    .. csv-table:: Supported Single Keys
         :header: "Key", "Description"
         :widths: 15, 30
 
@@ -434,17 +436,94 @@ class SingleKey(DuckyCommand):
         __doc__ += ' ' * 8 + f'"{" or ".join(k)}", "{v[1]}"\n'
 
     payloads = [pressSingleKey]
-    key = ''
+    _key = ''
 
     def _parse_arg(self):
         if self.arg is not None:
             raise CommandArgumentError("command doesn't accept any arguments")
 
     def _exec(self, arg):
-        return [f'pressSingleKey({self.key});']
+        return [f'pressSingleKey({self._key});']
 
 
 for names, key_and_desc in single_keys.items():
     key, desc = key_and_desc
     for name in names:
-        locals()[name] = type(name, (SingleKey, DuckyCommand), {'key': key})
+        locals()[name] = type(name, (SingleKey, DuckyCommand), {'_key': key})
+
+
+combo_keys = {
+    ('WINDOWS', 'WIN', 'GUI', 'COMMAND', 'CMD', 'META'): ('KEY_LEFT_GUI', 'Emulates the Windows-Key, sometimes referred to as the Super-key'),
+    ('SHIFT',): ('KEY_LEFT_SHIFT', 'Emulates SHIFT key, which can be used when navigating fields to select text, among other functions'),
+    ('ALT',): ('KEY_LEFT_ALT', 'Emulates ALT key, which can be used for many functions, such as navigating among windows'),
+    ('CONTROL', 'CTRL'): ('KEY_LEFT_CTRL', 'Emulates CONTROL key for very popular combinations: saving a file, undoing the last action, etc.')
+}
+
+
+class ComboKey(DuckyCommand):
+    """Emulates key sequences by holding down each key at the same time.
+    The list of available combo keys and their description are below
+
+    :syntax: *<key1> <key2?> <key3>*
+    :param key1: Main combo key, beginning of the sequence
+    :param key2: Optional second combo key, must not match the first one
+    :param key3: :class:`SingleKey` or ASCII lowercase character (a-z)
+    :example:
+
+    ::
+
+        CTRL ALT DELETE
+        REM Opens auxiliary window
+
+    .. csv-table:: Supported Combo Keys
+        :header: "Key", "Description"
+        :widths: 15, 30
+
+"""
+
+    for k, v in combo_keys.items():
+        __doc__ += ' ' * 8 + f'"{" or ".join(k)}", "{v[1]}"\n'
+
+    payloads = [pressComboKey]
+    _key = ''
+
+    def _parse_arg(self):
+        if self.arg is None:
+            raise CommandArgumentError('expected 1 or 2 arguments, but got nothing')
+
+        args = self.arg.split()
+        if len(args) > 2:
+            raise CommandArgumentError(f'expected 1 or 2 arguments, but got {len(args)}')
+
+        if len(args) == 2:
+            if args[0] == self._key:
+                raise CommandArgumentError(f'first argument must not match the command name')
+
+            for names, key_and_desc in combo_keys.items():
+                key, _ = key_and_desc
+                if args[0] in names:
+                    args[0] = key
+                    break
+            else:
+                raise CommandArgumentError(f'first argument expected as ComboKey, but got `{args[0]}`')
+
+        for names, key_and_desc in single_keys.items():
+            key, _ = key_and_desc
+            if args[-1] in names:
+                args[-1] = key
+                return args
+
+        if 97 <= ord(args[-1]) <= 122:
+            args[-1] = f"'{args[-1]}'"
+            return args
+
+        raise CommandArgumentError(f'last argument expected as SingleKey or ASCII lowercase char (a-z), but got `{args[-1]}`')
+
+    def _exec(self, arg):
+        return [f"pressComboKey({{{', '.join(['(uint8_t)' + i for i in [self._key] + arg])}}});"]
+
+
+for names, key_and_desc in combo_keys.items():
+    key, desc = key_and_desc
+    for name in names:
+        locals()[name] = type(name, (ComboKey, DuckyCommand), {'_key': key})

@@ -39,14 +39,14 @@ Let's write a test ducky script like this
 
 .. code-block::
 
-    REM Opens notepad and writing "Hello World!" 10 times
+    REM Opens notepad and writing "Hello World!" 5 times
     WINDOWS r
     DELAY 200
     STRING notepad.exe
     ENTER
     DELAY 500
     STRING Hello World!
-    REPEAT 9
+    REPEAT 4
 
 And save it as *test.ducky* file. Now you can convert this script to valid Arduino sketch with the following command
 

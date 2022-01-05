@@ -44,3 +44,9 @@ Single Key
 ==========
 
 .. autoclass:: pparser.commands.SingleKey
+
+
+Combo Key
+=========
+
+.. autoclass:: pparser.commands.ComboKey
