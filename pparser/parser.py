@@ -30,7 +30,7 @@ class PotatoParser:
             return
 
         for command in DuckyCommand.__subclasses__():
-            if cmd == command.__name__:
+            if command.__name__.isupper() and cmd == command.__name__:
                 command = command(arg, self)
 
                 try:

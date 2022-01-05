@@ -1,18 +1,23 @@
+"""File containing the main parser entrypoint
+"""
+
 from argparse import ArgumentParser
 from pathlib import Path
 from time import time
-
-from colorama import init
+from sys import argv
 
 from .parser import PotatoParser
 from .art import gen_art
 
 
-def main():
-    """Super Doc string """
-    init()
+def main(argv=argv):
+    """Main entrypoint of PotatoParser
 
-    parser = ArgumentParser(description='Potato Parser')
+    Args:
+        argv (Optional[list]): Parser options, defaults to `sys.argv`
+    """
+
+    parser = ArgumentParser(description='Potato Parser is converter of Ducky Script to Arduino sketch with some additional funcitons (like Alt codes)')
 
     parser.add_argument(dest='source', type=Path, metavar='SOURCE', help='Path to source of ducky script that needs to be parsed')
 
@@ -25,7 +30,7 @@ def main():
     group.add_argument('-a', dest='alphabets', type=Path, metavar='ALPHABET', action='append', help='Path to additional alphabets of ALT codes ', default=[])
     group.add_argument('--disable-alt', action='store_true', help='Don\'t parse strings to ALT codes sequences')
 
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     if not args.quiet:
         print(gen_art())
@@ -39,4 +44,4 @@ def main():
             pparser.i += 1
 
     pparser.sketch.flush()
-    pparser.log_success(f'Successfully parsed {pparser.i} lines in {round((time() - start) * 1000)}ms')
+    pparser.log_success(f'Successfully parsed {pparser.i} line{"s" * bool(pparser.i - 1)} in {round((time() - start) * 1000)}ms')

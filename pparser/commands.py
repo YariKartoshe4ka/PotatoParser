@@ -1,32 +1,115 @@
+"""File with implementations of Ducky Script language commands
+"""
+
 from .exceptions import *
 from .payloads import *
 
 
 class DuckyCommand:
+    """Abstract class of Ducky commands. Service commands (which cannot be
+    called from a script) have names in the camelCase style, and work
+    commands have the CAPSLOCK style
+
+    Args:
+        arg (Union[str, None]): Command argument, what follows after calling the
+            command (separated by a space)
+        pparser (pparser.parser.PotatoParser): Instance of PotatoParser
+    """
+
     payloads = []
 
     def __init__(self, arg, pparser):
         self.arg = arg
         self._pparser = pparser
 
-    def exec(self) -> list:
+    def exec(self):
+        """This method is called when executing the command, doesn't
+        change it during inheritance
+
+        Returns:
+            list: Generated Arduino code
+
+        Raises:
+            CommandArgumentError: Invalid command argument, see argument type
+                and description in documentation
+            CommandUsageError: Invalid command usage, see usage examples in
+                documentation
+            CommandInfoError: Command skipped due to reason in error description
+        """
         return self._exec(self._parse_arg())
 
-    def repeat_exec(self) -> list:
+    def repeat_exec(self):
+        """This method is called when the command is executed again, doesn't
+        change it during inheritance
+
+        Returns:
+            list: Generated Arduino code
+
+        Raises:
+            CommandArgumentError: Invalid command argument, see argument type
+                and description in documentation
+            CommandUsageError: Invalid command usage, see usage examples in
+                documentation
+            CommandInfoError: Command skipped due to reason in error description
+        """
         return self._repeat_exec(self._parse_arg())
 
-    def _parse_arg(self) -> any:
+    def _parse_arg(self):
+        """Responsible for parsing the string following the command call into
+        ready-to-use arguments. You can access the string via :attr:`self.arg`
+
+        Returns:
+            any: Already parsed argument, return type consistent
+            with :meth:`_exec` and :meth:`_repeat_exec`
+
+        Raises:
+            CommandArgumentError: Invalid command argument, see argument type
+                and description in documentation
+        """
         return None
 
-    def _exec(self, arg) -> list:
+    def _exec(self, arg):
+        """Processing the argument and returning the corresponding Arduino code
+
+        Args:
+            arg (any): Already parsed argument (via :meth:`_parse_arg`)
+
+        Returns:
+            list: Generated Arduino code
+
+        Raises:
+            CommandUsageError: Invalid command usage, see usage examples in
+                documentation
+            CommandInfoError: Command skipped due to reason in error description
+        """
         return []
 
-    def _repeat_exec(self, arg) -> list:
+    def _repeat_exec(self, arg):
+        """Processing the argument again and returning the corresponding
+        Arduino code
+
+        Args:
+            arg (any): Already parsed argument (via :meth:`_parse_arg`)
+
+        Returns:
+            list: Generated Arduino code
+
+        Raises:
+            CommandUsageError: Invalid command usage, see usage examples in
+                documentation
+            CommandInfoError: Command skipped due to reason in error description
+        """
         return []
 
 
 class UndefinedCommand(DuckyCommand):
+    """Inserted into the processed_commands list when command has
+    undefined name
+    """
+
     def _parse_arg(self):
+        """Unidentified command is non-working command
+        """
         raise Exception
 
 
@@ -127,8 +210,7 @@ class REPEAT(DuckyCommand):
         REPEAT 5
         REM The total pause is 3 seconds
 
-    .. note::
-
+    Note:
         1. Command cannot be called at the beginning of the script, because it
            will not be able to repeat any command
         2. Command cannot repeat several types of commands: :class:`REM`,
@@ -279,7 +361,6 @@ in the following format::
         ('KEY_N', 'ALIAS_1_KEY_N', ..., 'ALIAS_N_KEY_N'): ('CONST_KEY_N', 'KEY_N_DESCRIPTION')
     }
 """
-
 single_keys = {
     ('MENU', 'APP'): ('KEY_MENU', 'Emulates the App key, sometimes referred to as the menu key or context menu key. On Windows systems this is similar to the SHIFT F10 key combo, producing the menu similar to a right-click'),
     ('DOWNARROW', 'DOWN'): ('KEY_DOWN_ARROW', 'Emulates down arrow key'),
@@ -330,8 +411,8 @@ single_keys = {
 
 
 class SingleKey(DuckyCommand):
-    """Emulates one special key. The list of available keys and their
-    description are below
+    """Emulates one special key by one-time pressing. The list of available
+    keys and their description are below
 
     :syntax: *<key>*
     :param key: Key to emulate

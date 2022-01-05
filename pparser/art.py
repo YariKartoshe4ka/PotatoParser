@@ -47,7 +47,6 @@ def gen_art():
                     G`---`R
 '''
 
-
     art = art.replace('C', C) \
         .replace('W', W) \
         .replace('B', B) \
