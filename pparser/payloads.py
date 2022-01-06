@@ -22,13 +22,8 @@ class pressComboKey(Payload):
     text = [
         'template <size_t N> void pressComboKey(const uint8_t (&keys)[N]) {',
         [
-            'for (uint8_t key : keys) {',
-            [
-                'Keyboard.press(key);',
-                'delay(20);',
-            ],
-            '}',
-            'delay(50);',
+            'for (uint8_t key : keys) Keyboard.press(key);',
+            'delay(20);',
             'Keyboard.releaseAll();'
         ],
         '}'

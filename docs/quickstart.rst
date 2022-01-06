@@ -19,7 +19,7 @@ download and install them to continue
 Installation
 ============
 
-Now you can install `PotatoParser <https://www.python.org/downloads/>`_ from PyPI packages using pip
+Now you can install `PotatoParser <https://pypi.org/project/pparser/>`_ from PyPI packages using pip
 
 .. code-block:: bash
 
@@ -61,4 +61,7 @@ In current directory you can discover new folder *sketch* which contains Arduino
 Flashing
 ========
 
-Open prepared sketch in Arduino IDE. Connect your board to PC and flash it. Upon completion, the script will start executing and, if you did everything correctly, you will see "Hello World!" printed 10 times in notepad
+Open prepared sketch in Arduino IDE. Connect your board to PC and flash it. **Make sure you have enabled NumLock on your keyboard.** Upon completion, the script will start executing and, if you did everything correctly, you will see "Hello World!" printed 10 times in notepad. Here you can see the result (note that despite the **current Russian layout** ("РУС" = Russian), the **text was printed in English**):
+
+.. video:: _static/example.mp4
+    :width: 100%

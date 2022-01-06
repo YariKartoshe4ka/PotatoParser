@@ -1,57 +1,73 @@
-PotatoParser
-======
+<div align="center">
 
-PotatoParser is a Python script for parsing Ducky Script to Arduino.
+  ## PotatoParser
 
+  Converter of Ducky Script to Arduino sketch with some additional funcitons (like Alt codes)
 
+  ![](https://img.shields.io/pypi/v/pparser) [![](https://img.shields.io/static/v1?label=docs&message=tap%20here&color=brightgreen)](https://yarikartoshe4ka.github.io/PotatoParser) ![](https://img.shields.io/github/release-date/YariKartoshe4ka/PotatoParser)
 
-Required Tools
---------------
-
-* `Python3`: PotatoParser is compatible only with `python3`.
-* [`Colorama`](https://pypi.org/project/colorama/): For pretty text in bash
+  <img alt="PotatoParser ASCII banner" src="docs/banner.jpg" width="100%" />
+</div>
 
 
-Install PotatoParser
---------------
-To install onto your computer run:
+# Quickstart
 
-```bash
-git clone https://github.com/YariKartoshe4ka/PotatoParser.git
-cd PotatoParser
-pip3 install -r requirements.txt
-python3 setup.py install
-```
-or install with pip:
-```bash
-sudo pip3 install pparser
-```
+This quickstart will show you all process of conversion Ducky Script to Arduino sketch
 
 
-Run PotatoParser
-----------
-```
+### Requirements
 
-pparser script.ducky
-```
-In work derictory will be generated sketch.ino file, which contain complete Arduino code
+To reproduce what is described here, you need to satisfy the following dependencies
 
+- [Python](https://www.python.org/downloads/)
+- [Arduino IDE](https://www.arduino.cc/en/software)
+- [Sublime Text](https://www.sublimetext.com/download)
 
-Testing
-----------
-```
-python3 tests/runtest.py
-```
-If the last line is equal, the test is passed, otherwise the test is not passed
+download and install them to continue
 
 
+### Installation
 
-**Note:** Uninstalling is [not as easy](https://stackoverflow.com/questions/1550226/python-setup-py-uninstall#1550235). The only way to uninstall is to record the files installed by the above command and *remove* those files:
+Now you can install [PotatoParser](https://pypi.org/project/pparser/) from PyPI packages using pip
 
 ```bash
-sudo python3 setup.py install --record files.txt \
-  && cat files.txt | xargs sudo rm \
-  && rm -f files.txt
+pip install pparser
 ```
 
-**Warning!** Some commands are not implemented!
+or the latest (but possibly unstable) from GitHub
+
+```bash
+pip install git+https://github.com/YariKartoshe4ka/PotatoParser.git
+```
+
+
+### Processing
+
+Let's write a test ducky script like this
+
+```
+REM Opens notepad and writing "Hello World!" 5 times
+WINDOWS r
+DELAY 200
+STRING notepad.exe
+ENTER
+DELAY 500
+STRING Hello World!
+ENTER
+REPEAT 4 2
+```
+
+And save it as *test.ducky* file. Now you can convert this script to valid Arduino sketch with the following command
+
+```bash
+pparser test.ducky
+```
+
+In current directory you can discover new folder *sketch* which contains Arduino sketch
+
+
+### Flashing
+
+Open prepared sketch in Arduino IDE. Connect your board to PC and flash it. **Make sure you have enabled NumLock on your keyboard.** Upon completion, the script will start executing and, if you did everything correctly, you will see "Hello World!" printed 10 times in notepad. Here you can see the result (note that despite the **current Russian layout** ("РУС" = Russian), the **text was printed in English**):
+
+https://user-images.githubusercontent.com/49284924/148426223-d6935708-9a0b-4523-ad12-71c63402a12f.mp4

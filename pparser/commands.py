@@ -274,8 +274,8 @@ class REPEAT(DuckyCommand):
 class STRING(DuckyCommand):
     """Processes the text in two modes (you can choose one)
 
-    1. ALT (each character is entered as an ALT code)
-    2. non-ALT (entered as a normal keystroke, only characters which
+    1. Alt (each character is entered as an Alt code)
+    2. non-Alt (entered as a normal keystroke, only characters which
        supported on a specific keyboard layout
 
     :syntax: *STRING <string>*
@@ -317,8 +317,8 @@ class STRINGDELAY(DuckyCommand):
     """Processes the text in two modes (you can choose one) with a certain
     speed characters typing
 
-    1. ALT (each character is entered as an ALT code)
-    2. non-ALT (entered as a normal keystroke, only characters which
+    1. Alt (each character is entered as an Alt code)
+    2. non-Alt (entered as a normal keystroke, only characters which
        supported on a specific keyboard layout
 
     :syntax: - *STRINGDELAY <time> <string>*

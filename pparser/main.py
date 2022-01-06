@@ -19,16 +19,16 @@ def main(argv=argv[1:]):
 
     parser = ArgumentParser(description='Potato Parser is converter of Ducky Script to Arduino sketch with some additional funcitons (like Alt codes)')
 
-    parser.add_argument(dest='source', type=Path, metavar='SOURCE', help='Path to source of ducky script that needs to be parsed')
+    parser.add_argument(dest='source', type=Path, metavar='SOURCE', help='path to source of ducky script that needs to be parsed')
 
-    parser.add_argument('-e', '--error-ok', action='store_true', help='Do not exit if an error occurred during parsing')
-    parser.add_argument('-q', '--quiet', action='store_true', help='Quiet mode that disables ASCII banner')
-    parser.add_argument('-o', dest='output', type=str, metavar='OUTPUT', default='sketch', help='Name or path to output directory, contains sketch')
-    parser.add_argument('-i', dest='indent', type=int, metavar='INDENT', default=2, help='Number of spaces per indent in the output sketch')
+    parser.add_argument('-e', '--error-ok', action='store_true', help='do not exit if an error occurred during parsing')
+    parser.add_argument('-q', '--quiet', action='store_true', help='quiet mode that disables ASCII banner')
+    parser.add_argument('-o', dest='output', type=str, metavar='OUTPUT', default='sketch', help='name or path to output directory, contains sketch')
+    parser.add_argument('-i', dest='indent', type=int, metavar='INDENT', default=2, help='number of spaces per indent in the output sketch')
 
     group = parser.add_mutually_exclusive_group()
-    group.add_argument('-a', dest='alphabets', type=Path, metavar='ALPHABET', action='append', help='Path to additional alphabets of ALT codes ', default=[])
-    group.add_argument('--disable-alt', action='store_true', help='Don\'t parse strings to ALT codes sequences')
+    group.add_argument('-a', dest='alphabets', type=Path, metavar='ALPHABET', action='append', help='path to additional alphabets of Alt codes ', default=[])
+    group.add_argument('--disable-alt', action='store_true', help='don\'t parse strings to Alt codes sequences')
 
     args = parser.parse_args()
 

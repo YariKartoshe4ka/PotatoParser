@@ -19,7 +19,7 @@ Pros
 ----
 
 - Uses pre-installed `Keyboard.h`_ library at background which eliminates the excruciating problem of installing dependencies
-- Parser supports `ALT codes <https://en.wikipedia.org/wiki/Alt_code>`_, thanks to which you can print text regardless of the current victim keyboard layout
+- Parser supports `Alt codes <https://en.wikipedia.org/wiki/Alt_code>`_, thanks to which you can print text regardless of the current victim keyboard layout
 - The output sketch is well optimized in memory. This allows you to convert large enough scripts with long texts without fear of overflowing your microcontroller's memory
 
 Cons
