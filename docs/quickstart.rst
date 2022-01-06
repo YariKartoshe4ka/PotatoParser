@@ -46,7 +46,8 @@ Let's write a test ducky script like this
     ENTER
     DELAY 500
     STRING Hello World!
-    REPEAT 4
+    ENTER
+    REPEAT 4 2
 
 And save it as *test.ducky* file. Now you can convert this script to valid Arduino sketch with the following command
 

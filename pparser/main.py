@@ -40,7 +40,7 @@ def main(argv=argv[1:]):
 
     with open(args.source, encoding='utf-8') as source:
         for line in source:
-            pparser.exec(*line.rstrip('\n').split(' ', 1))
+            pparser.exec(*line.rstrip().split(' ', 1))
             pparser.i += 1
 
     pparser.sketch.flush()

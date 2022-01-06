@@ -162,7 +162,7 @@ class DEFAULTDELAY(DELAY, DuckyCommand):
     between each subsequent command. Command must be issued at the beginning of
     the ducky script and is optional. Not specifying the command will result in
     faster execution of ducky scripts. This command is mostly useful when
-    debugging
+    debugging. :class:`DELAY` command will override this delay
 
     :syntax: - *DEFAULTDELAY <time>*
              - *DEFAULT_DELAY <time>*
@@ -172,9 +172,11 @@ class DEFAULTDELAY(DELAY, DuckyCommand):
     ::
 
         DEFAULTDELAY 500
-        DELAY 750
-        DELAY 750
-        REM The total pause is 2 seconds
+        STRING Super text
+        STRING Another super text
+        DELAY 300
+        STRING Text after delay
+        REM The total pause is 1.8 seconds
     """
 
     def _exec(self, arg):
@@ -184,7 +186,7 @@ class DEFAULTDELAY(DELAY, DuckyCommand):
         return []
 
     def _repeat_exec(self, arg):
-        skip_commands = (REM, DEFAULT_DELAY, DEFAULTDELAY)
+        skip_commands = (REM, DEFAULT_DELAY, DEFAULTDELAY, DELAY)
 
         for skip_command in skip_commands:
             if isinstance(self._pparser.processed_commands[-1], skip_command):
@@ -198,21 +200,23 @@ class DEFAULT_DELAY(DEFAULTDELAY, DuckyCommand):
 
 
 class REPEAT(DuckyCommand):
-    """Repeats the last command several times
+    """Repeats the last *N* commands several times
 
-    :syntax: *REPEAT <num>*
+    :syntax: *REPEAT <num> <amount?>*
     :param num: Number of repetitions
+    :param amount: Amount of commands to repeat, defaults to 1
     :example:
 
     ::
 
+        DELAY 200
         DELAY 500
-        REPEAT 5
-        REM The total pause is 3 seconds
+        REPEAT 5 2
+        REM The total pause is 4.2 seconds
 
     Note:
-        1. Command cannot be called at the beginning of the script, because it
-           will not be able to repeat any command
+        1. Command cannot be called if the declared amount of commands to
+           repeat is greater than the number of commands already processed
         2. Command cannot repeat several types of commands: :class:`REM`,
            :class:`DEFAULTDELAY`, :class:`DEFAULT_DELAY`, :class:`REPEAT`
         3. Delay will not be called per repeat if the :class:`DEFAULTDELAY`
@@ -220,33 +224,51 @@ class REPEAT(DuckyCommand):
     """
 
     def _parse_arg(self):
-        try:
-            arg = int(self.arg)
-            assert 1 <= arg <= 100
-        except (TypeError, ValueError, AssertionError):
-            raise CommandArgumentError('expected integer in range from 1 to 100')
+        if self.arg is None:
+            raise CommandArgumentError('expected 1 or 2 arguments, but got nothing')
 
-        return arg
+        args = self.arg.split()
+        if len(args) > 2:
+            raise CommandArgumentError(f'expected 1 or 2 arguments, but got {len(args)}')
+
+        try:
+            args[0] = int(args[0])
+            assert 1 <= args[0] <= 100
+        except (TypeError, ValueError, AssertionError):
+            raise CommandArgumentError('first argument expected as integer in range from 1 to 100')
+
+        if len(args) == 2:
+            try:
+                args[1] = int(args[1])
+                assert 1 <= args[1] <= 100
+            except (TypeError, ValueError, AssertionError):
+                raise CommandArgumentError('second argument expected as integer in range from 1 to 100')
+        else:
+            args.append(1)
+
+        return args
 
     def _exec(self, arg):
-        if not self._pparser.processed_commands:
-            raise CommandUsageError('command cannot be used in the top of script')
+        prev_commands = self._pparser.processed_commands[-arg[1]:]
 
-        prev_command = self._pparser.processed_commands[-1]
+        if len(prev_commands) < arg[1]:
+            raise CommandArgumentError(f'there are not enough commands to repeat {len(prev_commands)} < {arg[1]}')
+
         invalid_commands = (REM, DEFAULT_DELAY, DEFAULTDELAY, REPEAT)
 
         for invalid_command in invalid_commands:
-            if isinstance(prev_command, invalid_command):
-                raise CommandArgumentError(f'cannot repeat the `{invalid_command.__name__}` command')
+            for prev_command in prev_commands:
+                if isinstance(prev_command, invalid_command):
+                    raise CommandArgumentError(f'cannot repeat the `{invalid_command.__name__}` command')
 
         try:
             return [
-                f'for (short i = 0; i < {arg}; ++i) {{',
-                prev_command.exec(),
+                f'for (short i = 0; i < {arg[0]}; ++i) {{',
+                *[prev_command.exec() for prev_command in prev_commands],
                 '}'
             ]
         except Exception:
-            raise CommandInfoError('Command skipped due to inoperability of previous')
+            raise CommandInfoError('Command skipped due to inoperability of previous ones')
 
 
 class STRING(DuckyCommand):
@@ -452,6 +474,18 @@ for names, key_and_desc in single_keys.items():
         locals()[name] = type(name, (SingleKey, DuckyCommand), {'_key': key})
 
 
+"""Available keys for :class:`ComboKey` defined in `combo_keys`
+in the following format
+
+.. code-block:: python
+
+    combo_keys = {
+        ('KEY_1', 'ALIAS_1_KEY_1', ..., 'ALIAS_N_KEY_1'): ('CONST_KEY_1', 'KEY_1_DESCRIPTION'),
+        ('KEY_2', 'ALIAS_1_KEY_2', ..., 'ALIAS_N_KEY_2'): ('CONST_KEY_2', 'KEY_2_DESCRIPTION'),
+         ...
+        ('KEY_N', 'ALIAS_1_KEY_N', ..., 'ALIAS_N_KEY_N'): ('CONST_KEY_N', 'KEY_N_DESCRIPTION')
+    }
+"""
 combo_keys = {
     ('WINDOWS', 'WIN', 'GUI', 'COMMAND', 'CMD', 'META'): ('KEY_LEFT_GUI', 'Emulates the Windows-Key, sometimes referred to as the Super-key'),
     ('SHIFT',): ('KEY_LEFT_SHIFT', 'Emulates SHIFT key, which can be used when navigating fields to select text, among other functions'),
@@ -472,7 +506,7 @@ class ComboKey(DuckyCommand):
 
     ::
 
-        CTRL ALT DELETE
+        CONTROL ALT DELETE
         REM Opens auxiliary window
 
     .. csv-table:: Supported Combo Keys
