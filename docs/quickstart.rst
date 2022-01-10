@@ -11,7 +11,7 @@ To reproduce what is described here, you need to satisfy the following dependenc
 
 - `Python <https://www.python.org/downloads/>`_
 - `Arduino IDE <https://www.arduino.cc/en/software>`_
-- `Sublime Text <https://www.sublimetext.com/download>`_
+- `Sublime Text <https://www.sublimetext.com/download>`_ (or another text editor)
 
 download and install them to continue
 
