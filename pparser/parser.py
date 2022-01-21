@@ -2,11 +2,10 @@ from json import load
 from pathlib import Path
 from sys import exit
 
-from colorama import Style, Fore
-
 from .commands import *
-from .exceptions import *
+from .exceptions import PotatoParserError, PotatoParserWarning
 from .sketch import Sketch
+from .utils import *
 
 
 class PotatoParser:
@@ -22,8 +21,14 @@ class PotatoParser:
                 self.alphabet.update(load(file))
 
         for path in args.alphabets:
+            check_file(path)
             with open(path, encoding='utf-8') as file:
                 self.alphabet.update(load(file))
+
+        # Redefining `_log_func` funcitons of exceptions
+        # Not clear method, but working
+        PotatoParserError._log_func = self.log_error
+        PotatoParserWarning._log_func = self.log_info
 
     def exec(self, cmd, arg=None):
         if not cmd:
@@ -35,12 +40,8 @@ class PotatoParser:
 
                 try:
                     out = command.exec()
-                except CommandArgumentError as e:
-                    self.log_error('Invalid command argument(s)', str(e))
-                except CommandUsageError as e:
-                    self.log_error('Invalid command usage', str(e))
-                except CommandInfoError as e:
-                    self.log_info(str(e))
+                except (PotatoParserWarning, PotatoParserError) as e:
+                    e.log()
                 else:
                     self.sketch.add(out, command.payloads)
 
@@ -55,10 +56,10 @@ class PotatoParser:
                 return
 
         self.processed_commands.append(UndefinedCommand(arg, self))
-        self.log_error('Undefined command', f'`{cmd}`')
+        self.log_error(f'Undefined command: `{cmd}`')
 
-    def log_error(self, name, desc):
-        print(f'{Style.BRIGHT}{Fore.RED}[!]{Style.RESET_ALL} {name}: {desc} (line {self.i + 1})')
+    def log_error(self, msg):
+        log_error(f'{msg} (line {self.i + 1})')
 
         if self.args.error_ok:
             self.is_success = False
@@ -66,7 +67,4 @@ class PotatoParser:
             exit(1)
 
     def log_info(self, msg):
-        print(f'{Style.BRIGHT}{Fore.BLACK}[*] {msg} (line {self.i + 1}){Style.RESET_ALL}')
-
-    def log_success(self, msg):
-        print(f'{Style.BRIGHT}{Fore.GREEN}[+]{Style.RESET_ALL} {msg}')
+        log_info(f'{msg} (line {self.i + 1})')

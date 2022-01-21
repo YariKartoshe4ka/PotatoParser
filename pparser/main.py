@@ -6,8 +6,9 @@ from pathlib import Path
 from time import time
 from sys import argv
 
-from .parser import PotatoParser
 from .art import gen_art
+from .parser import PotatoParser
+from .utils import check_file, log_success
 
 
 def main(argv=argv[1:]):
@@ -16,7 +17,6 @@ def main(argv=argv[1:]):
     Args:
         argv (Optional[list]): Parser options, defaults to `sys.argv`
     """
-
     parser = ArgumentParser(description='Potato Parser is converter of Ducky Script to Arduino sketch with some additional funcitons (like Alt codes)')
 
     parser.add_argument(dest='source', type=Path, metavar='SOURCE', help='path to source of ducky script that needs to be parsed')
@@ -38,10 +38,12 @@ def main(argv=argv[1:]):
     start = time()
     pparser = PotatoParser(args)
 
+    check_file(args.source)
+
     with open(args.source, encoding='utf-8') as source:
         for line in source:
             pparser.exec(*line.rstrip().split(' ', 1))
             pparser.i += 1
 
     pparser.sketch.flush()
-    pparser.log_success(f'Successfully parsed {pparser.i} line{"s" * bool(pparser.i - 1)} in {round((time() - start) * 1000)}ms')
+    log_success(f'Successfully parsed {pparser.i} line{"s" * bool(pparser.i - 1)} in {round((time() - start) * 1000)}ms')

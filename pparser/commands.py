@@ -34,7 +34,7 @@ class DuckyCommand:
                 and description in documentation
             CommandUsageError: Invalid command usage, see usage examples in
                 documentation
-            CommandInfoError: Command skipped due to reason in error description
+            CommandInfoWarning: Command skipped due to reason in error description
         """
         return self._exec(self._parse_arg())
 
@@ -50,7 +50,7 @@ class DuckyCommand:
                 and description in documentation
             CommandUsageError: Invalid command usage, see usage examples in
                 documentation
-            CommandInfoError: Command skipped due to reason in error description
+            CommandInfoWarning: Command skipped due to reason in error description
         """
         return self._repeat_exec(self._parse_arg())
 
@@ -80,7 +80,7 @@ class DuckyCommand:
         Raises:
             CommandUsageError: Invalid command usage, see usage examples in
                 documentation
-            CommandInfoError: Command skipped due to reason in error description
+            CommandInfoWarning: Command skipped due to reason in error description
         """
         return []
 
@@ -97,7 +97,7 @@ class DuckyCommand:
         Raises:
             CommandUsageError: Invalid command usage, see usage examples in
                 documentation
-            CommandInfoError: Command skipped due to reason in error description
+            CommandInfoWarning: Command skipped due to reason in error description
         """
         return []
 
@@ -268,7 +268,7 @@ class REPEAT(DuckyCommand):
                 '}'
             ]
         except Exception:
-            raise CommandInfoError('Command skipped due to inoperability of previous ones')
+            raise CommandInfoWarning('Command skipped due to inoperability of previous ones')
 
 
 class STRING(DuckyCommand):
