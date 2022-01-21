@@ -1,7 +1,6 @@
 """File containing auxiliary functions
 """
 
-
 from sys import exit
 
 from colorama import Style, Fore
