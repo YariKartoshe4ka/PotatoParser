@@ -85,7 +85,10 @@ class PotatoParser:
                     e.log()
                 else:
                     # On success add command output to sketch
-                    self.sketch.add(out, command.payloads)
+                    self.sketch.add_text(out)
+
+                    for payload in command.payloads:
+                        self.sketch.add_payload(payload)
 
                 self.processed_commands.append(command)
 

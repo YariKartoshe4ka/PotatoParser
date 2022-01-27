@@ -1,4 +1,45 @@
+"""File containing various paylods (C++ sources) responsible for certain
+functions and simplifying (or reducing) the final size of the sketch
+"""
+
+
 class Payload:
+    """Abstract class for each payload. The arguments are specified
+    directly in the class itself
+
+    Args:
+        header (str): Multiline or one-line responsible for the function
+            declaration is inserted at the top of the sketch, before
+            *setup* function
+        text (Tuple[Union[Tuple, str]]): Sources of the declared function,
+            which are written in a special format described below
+        depends (List[Payload]): Paylods required for the current paylod
+            to work. An empty list can be passed
+
+    Note:
+        The special format of the function sources is as follows: in order
+        for paylods to be used with different indentation sizes, nested lists
+        are used instead of indents. For example, this C++ code:
+
+        .. code-block:: c++
+
+            void printHelloWorld() {
+                Serial.println(F("Hello World"));
+            }
+
+        will equivalent to this on Python:
+
+        .. code-block:: python
+
+            text = [
+                'void printHelloWorld() {',
+                [
+                    'Serial.println(F("Hello World"));'
+                ],
+                '}'
+            ]
+    """
+
     depends = []
     header = ''
     text = []

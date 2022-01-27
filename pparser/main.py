@@ -23,7 +23,7 @@ def main(argv=argv[1:]):
 
     parser.add_argument('-e', '--error-ok', action='store_true', help='do not exit if an error occurred during parsing')
     parser.add_argument('-q', '--quiet', action='store_true', help='quiet mode that disables ASCII banner')
-    parser.add_argument('-o', dest='output', type=str, metavar='OUTPUT', default='sketch', help='name or path to output directory, contains sketch')
+    parser.add_argument('-o', dest='output', type=Path, metavar='OUTPUT', default='sketch', help='name or path to output directory, contains sketch')
     parser.add_argument('-i', dest='indent', type=int, metavar='INDENT', default=2, help='number of spaces per indent in the output sketch')
 
     group = parser.add_mutually_exclusive_group()
