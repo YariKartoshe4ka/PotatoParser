@@ -26,6 +26,8 @@ setup(
         ]
     },
 
+    include_package_data=True,
+
     description='Parser from Ducky Script to Ardunio',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
