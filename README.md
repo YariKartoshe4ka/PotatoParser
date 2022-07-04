@@ -4,9 +4,11 @@
 
   Converter of Ducky Script to Arduino sketch with some additional funcitons (like Alt codes)
 
-  ![](https://img.shields.io/pypi/v/pparser) [![](https://img.shields.io/static/v1?label=docs&message=tap%20here&color=brightgreen)](https://yarikartoshe4ka.github.io/PotatoParser) ![](https://img.shields.io/github/release-date/YariKartoshe4ka/PotatoParser)
+  [![](https://img.shields.io/pypi/v/pparser)](https://pypi.org/project/pparser/)
+  [![](https://img.shields.io/readthedocs/pparser)](https://pparser.readthedocs.io)
+  [![](https://img.shields.io/github/release-date/YariKartoshe4ka/PotatoParser)](https://github.com/YariKartoshe4ka/PotatoParser/releases)
 
-  <img alt="PotatoParser ASCII banner" src="docs/banner.jpg" width="100%" />
+  <img alt="PotatoParser ASCII banner" src="https://raw.githubusercontent.com/YariKartoshe4ka/PotatoParser/master/docs/banner.jpg" width="100%" />
 </div>
 
 
