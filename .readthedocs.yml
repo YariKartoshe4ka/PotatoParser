@@ -3,9 +3,6 @@ version: 2
 build:
   image: latest
 
-formats:
-  - pdf
-
 python:
   version: 3.8
   install:
