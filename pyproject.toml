@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=60"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pparser"
+description = "Parser from Ducky Script to Ardunio"
+license = { text = "GPL-3.0-or-later" }
+authors = [
+    { name = "Yaroslav Kikel", email = "yaroslav.kikel.06@inbox.ru"}
+]
+dependencies = [
+    "colorama>=0.4.3",
+    "requests>=2.24.0",
+    "packaging>=20.4"
+]
+urls.Documentation = "https://pparser.readthedocs.io"
+urls.Homepage = "https://github.com/YariKartoshe4ka/PotatoParser"
+urls.Source = "https://github.com/YariKartoshe4ka/PotatoParser"
+urls.Tracker = "https://github.com/YariKartoshe4ka/PotatoParser/issues"
+readme = "README.md"
+keywords = ["parser", "ducky", "arduino", "badusb"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Topic :: Software Development :: Code Generators",
+    "Environment :: Console"
+]
+scripts = { pparser = "pparser.main:main" }
+dynamic = ["version"]
+
+[project.optional-dependencies]
+docs = [
+    "sphinx>=4",
+    "sphinx-rtd-theme>=1.0.0",
+    "sphinxcontrib-video"
+]
+
+[tool.setuptools]
+packages = ["pparser"]
+
+[tool.setuptools.package-data]
+pparser = ["alphabets/*.json"]
+
+[tool.setuptools.dynamic]
+version = {attr = "pparser.__version__"}
